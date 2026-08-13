@@ -1,75 +1,31 @@
-import streamlit as st
-import time
-import random
+# 🎤 RABINO-RAP-MUSIC-PRO-MAX
 
-st.set_page_config(page_title="RABINO RAP STUDIO PRO", layout="centered", page_icon="🎤")
+### 🔥 El Imperio de Música Urbana con IA
+**"La IA que convierte tu unción en HITS que cambian naciones"**
 
-st.title("🎤 RABINO RAP STUDIO PRO")
-st.subheader("La IA que convierte tu unción en HITS que cambian naciones")
-st.markdown("---")
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
 
-st.header("🔥 LA CABINA")
+---
 
-# CAMPO 1: NOMBRE
-nombre = st.text_input("👤 Nombre del Artista", "Rabino")
+## 🚀 ¿QUÉ ES ESTO?
+Es tu estudio musical online. Generas letras + prompts para Suno AI en 30 segundos.
+Hecho desde **Los Alcarrizos, RD 🇩🇴** para el mundo.
 
-# CAMPO 2: GÉNERO CON BPM AUTOMÁTICO
-genero_bpm = {
-    "Rap Cristiano": 85,
-    "Dembow Cristiano": 95,
-    "Reggaeton Cristiano": 100,
-    "Trap Cristiano": 140,
-    "Afro Cristiano": 110,
-    "Drill Cristiano": 150
-}
-genero = st.selectbox("🎵 Género", list(genero_bpm.keys()))
-bpm_auto = genero_bpm[genero]
-st.info(f"⚡ BPM Automático: {bpm_auto} - Perfecto para {genero}")
+## ✨ CARACTERÍSTICAS PRO-MAX
+- 🎛️ **BPM Automático** por género: Reggaeton, Dembow, Bachata, Trap, Rap
+- 🎙️ **Modo Solo y Dúo**
+- 🌎 **3 Idiomas**: Español, English, Bilingüe
+- 🔥 **4 Vibes**: Cristiano, Secular, Romántico, Calle
+- 🤖 **Prompt listo para Suno AI** en 1 click
+- ⬇️ **Descargar letra + prompt** en .txt
 
-# CAMPO 3: TEMA
-tema = st.text_area("📖 Tema de la canción / Letra", "Ej: dinero, victoria, Dios, Los Alcarrizos")
+## 🛠️ COMO USAR
+1. Escribe tu nombre de artista
+2. Elige género y tema
+3. Dale `GENERAR HIT PARA SUNO AI`
+4. Copia el prompt y pégalo en [Suno.com](https://suno.com)
 
-st.markdown("---")
-st.header("🎛️ PRODUCCIÓN")
-
-# CAMPO 4: SUBIR BEAT
-beat = st.file_uploader("📁 Sube tu Beat MP3", type=["mp3", "wav"])
-if not beat:
-    if st.button("🎵 GENERAR BEAT ORIGINAL IA"):
-        st.success(f"✅ Beat {genero} a {bpm_auto} BPM generado")
-
-# CAMPO 5: SUBIR VOZ PARA CLONAR
-voz = st.file_uploader("🎙️ Sube tu Voz WAV - 15 segundos pa' clonarte", type=["wav", "mp3"])
-
-# CAMPO 6: VOZ A CLONAR - ARREGLADO
-voz_clonar = st.selectbox("🧠 Voz a Clonar", ["Mi Voz - La que subí arriba", "Voz IA Genérica"])
-if voz_clonar == "Mi Voz - La que subí arriba" and voz:
-    st.success("✅ Tu voz está lista para clonar")
-
-st.markdown("---")
-
-# CAMPO 7: BOTÓN GENERAR 10 HITS
-if st.button("🔥 GENERAR 10 HITS CON MI VOZ"):
-    if not tema:
-        st.error("Escribe un tema primero broth")
-    elif not voz:
-        st.error("Sube tu clip de voz pa' clonarte")
-    else:
-        progress = st.progress(0)
-        for i in range(10):
-            with st.spinner(f"Creando HIT {i+1}/10 en {genero} a {bpm_auto} BPM..."):
-                time.sleep(1.5)
-                letra = f"[HOOK]\nYo estoy en {tema}\n{nombre} en el beat a {bpm_auto} BPM\nRABINO RECORDS con unción"
-                st.write(f"**{i+1}. {tema} - {genero} - {bpm_auto}BPM**")
-                st.code(letra)
-            progress.progress((i+1)/10)
-
-        st.balloons()
-        st.success("✅ 10 HITS LISTOS CON TU VOZ")
-
-        st.header("💰 PANEL DE MONETIZACIÓN")
-        st.write("Todo listo para subir a Spotify, TikTok, YouTube")
-        st.download_button("⬇️ DESCARGAR PAQUETE COMPLETO.ZIP", "zip_data", f"RABINO_{tema}_10HITS.zip")
-
-st.markdown("---")
-st.caption("👑 Hecho por RABINO RECORDS | BPM automático por género | 100% Copyright tuyo")
+## 💻 INSTALAR EN LOCAL
+```bash
+pip install streamlit
+streamlit run app.py
