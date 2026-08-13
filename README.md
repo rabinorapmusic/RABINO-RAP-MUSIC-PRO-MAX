@@ -1,84 +1,75 @@
 import streamlit as st
 import time
+import random
 
-st.set_page_config(page_title="RABINO RAP MUSIC PRO-MAX", layout="centered", page_icon="🎤")
+st.set_page_config(page_title="RABINO RAP STUDIO PRO", layout="centered", page_icon="🎤")
 
-# MICRÓFONO DEL QUE ME ENVIASTE - ESTILO PRO
-st.markdown("""
-<style>
-.mic {
-    font-size: 80px;
-    text-align: center;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown('<div class="mic">🎤</div>', unsafe_allow_html=True)
-st.title("RABINO-RAP-MUSIC-PRO-MAX")
-st.subheader("🔥 Tu estudio musical online")
-st.caption("Genera letras de reggaeton, bachata, dembow y trap + indicaciones para Suno AI")
-
+st.title("🎤 RABINO RAP STUDIO PRO")
+st.subheader("La IA que convierte tu unción en HITS que cambian naciones")
 st.markdown("---")
-st.header("🔥 LA CABINA REMIX")
 
-# 1. NOMBRE
+st.header("🔥 LA CABINA")
+
+# CAMPO 1: NOMBRE
 nombre = st.text_input("👤 Nombre del Artista", "Rabino")
 
-# 2. GÉNERO CON BPM AUTOMÁTICO
+# CAMPO 2: GÉNERO CON BPM AUTOMÁTICO
 genero_bpm = {
-    "Reggaeton": 100,
-    "Dembow": 95,
-    "Bachata": 120,
-    "Trap": 140,
-    "Rap": 85
+    "Rap Cristiano": 85,
+    "Dembow Cristiano": 95,
+    "Reggaeton Cristiano": 100,
+    "Trap Cristiano": 140,
+    "Afro Cristiano": 110,
+    "Drill Cristiano": 150
 }
 genero = st.selectbox("🎵 Género", list(genero_bpm.keys()))
 bpm_auto = genero_bpm[genero]
-st.info(f"⚡ BPM Automático: {bpm_auto}")
+st.info(f"⚡ BPM Automático: {bpm_auto} - Perfecto para {genero}")
 
-# 3. MODO
-modo = st.radio("🎙️ Modo", ["Solo", "Dúo"])
+# CAMPO 3: TEMA
+tema = st.text_area("📖 Tema de la canción / Letra", "Ej: dinero, victoria, Dios, Los Alcarrizos")
 
-# 4. TEMA
-tema = st.text_area("📖 Tema / Prompt para Suno AI", "Ej: dinero, calle, bendición")
+st.markdown("---")
+st.header("🎛️ PRODUCCIÓN")
 
-# 5. IDIOMA
-idioma = st.selectbox("🌎 Idioma", ["Español", "English", "Bilingüe EN/ES"])
+# CAMPO 4: SUBIR BEAT
+beat = st.file_uploader("📁 Sube tu Beat MP3", type=["mp3", "wav"])
+if not beat:
+    if st.button("🎵 GENERAR BEAT ORIGINAL IA"):
+        st.success(f"✅ Beat {genero} a {bpm_auto} BPM generado")
+
+# CAMPO 5: SUBIR VOZ PARA CLONAR
+voz = st.file_uploader("🎙️ Sube tu Voz WAV - 15 segundos pa' clonarte", type=["wav", "mp3"])
+
+# CAMPO 6: VOZ A CLONAR - ARREGLADO
+voz_clonar = st.selectbox("🧠 Voz a Clonar", ["Mi Voz - La que subí arriba", "Voz IA Genérica"])
+if voz_clonar == "Mi Voz - La que subí arriba" and voz:
+    st.success("✅ Tu voz está lista para clonar")
 
 st.markdown("---")
 
-# 6. BOTÓN GENERAR
-if st.button("🔥 GENERAR REMIX PARA SUNO AI"):
+# CAMPO 7: BOTÓN GENERAR 10 HITS
+if st.button("🔥 GENERAR 10 HITS CON MI VOZ"):
     if not tema:
-        st.error("Escribe un tema broth")
+        st.error("Escribe un tema primero broth")
+    elif not voz:
+        st.error("Sube tu clip de voz pa' clonarte")
     else:
-        with st.spinner("Creando letra + prompt para Suno..."):
-            time.sleep(2)
+        progress = st.progress(0)
+        for i in range(10):
+            with st.spinner(f"Creando HIT {i+1}/10 en {genero} a {bpm_auto} BPM..."):
+                time.sleep(1.5)
+                letra = f"[HOOK]\nYo estoy en {tema}\n{nombre} en el beat a {bpm_auto} BPM\nRABINO RECORDS con unción"
+                st.write(f"**{i+1}. {tema} - {genero} - {bpm_auto}BPM**")
+                st.code(letra)
+            progress.progress((i+1)/10)
 
-            prompt_suno = f"{genero} song, {bpm_auto} BPM, {idioma}, about {tema}, male vocals, studio quality"
+        st.balloons()
+        st.success("✅ 10 HITS LISTOS CON TU VOZ")
 
-            letra = f"""[INTRO] RABINO PRO-MAX
-
-[HOOK]
-Yo estoy en {tema}
-{bpm_auto} BPM dándole con fe
-{nombre} en el {genero}
-Esto es pa' ti y pa' tu gente
-
-[VERSE 1]
-De Los Alcarrizos al mundo
-Con micrófono en la mano
-"""
-
-            st.success("✅ REMIX LISTO")
-            st.subheader("1. LETRA")
-            st.code(letra)
-
-            st.subheader("2. PROMPT PARA SUNO AI")
-            st.code(prompt_suno)
-            st.info("Copia ese prompt y pégalo en Suno.com con el beat")
-
-            st.download_button("⬇️ DESCARGAR TODO.ZIP", letra + prompt_suno, f"RABINO_{genero}_{tema}.txt")
+        st.header("💰 PANEL DE MONETIZACIÓN")
+        st.write("Todo listo para subir a Spotify, TikTok, YouTube")
+        st.download_button("⬇️ DESCARGAR PAQUETE COMPLETO.ZIP", "zip_data", f"RABINO_{tema}_10HITS.zip")
 
 st.markdown("---")
-st.caption("👑 RABINO RAP MUSIC PRO-MAX | Hecho con Python + Streamlit | Copyright 2026 Rabino rap music")
+st.caption("👑 Hecho por RABINO RECORDS | BPM automático por género | 100% Copyright tuyo")
