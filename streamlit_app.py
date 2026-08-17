@@ -1,7 +1,6 @@
 import streamlit as st
 import random
 import time
-from gtts import gTTS
 import os
 from io import BytesIO
 
